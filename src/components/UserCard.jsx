@@ -4,7 +4,7 @@ import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { removeUserFromFeed } from "../utils/feedSlice.js";
 
-const UserCard = ({ user }) => {
+const UserCard = ({ user, editProfile }) => {
   const { _id, firstName, lastName, photoUrl, age, gender, about } = user;
   const dispatch = useDispatch();
 
@@ -17,7 +17,7 @@ const UserCard = ({ user }) => {
       );
       dispatch(removeUserFromFeed(userId));
     } catch (err) {
-        console.log(err);
+      console.log(err);
     }
   };
 
@@ -28,22 +28,27 @@ const UserCard = ({ user }) => {
       </figure>
       <div className="card-body">
         <h2 className="card-title">{firstName + " " + lastName}</h2>
-        {age && gender && <p>{age + ", " + gender}</p>}
-        <p>{about}</p>
-        <div className="card-actions justify-center my-4">
-          <button
-            className="btn btn-primary"
-            onClick={() => handleSendRequest("ignored", _id)}
-          >
-            Ignore
-          </button>
-          <button
-            className="btn btn-secondary"
-            onClick={() => handleSendRequest("interested", _id)}
-          >
-            Interested
-          </button>
-        </div>
+        <p className="flex-grow-0">
+          {age ? age : ""} {age && gender && ", "} {gender ? gender : ""}
+        </p>
+        <p className="w-full break-words">{about}</p>
+
+        {editProfile === false && (
+          <div className="card-actions justify-center my-4">
+            <button
+              className="btn btn-primary"
+              onClick={() => handleSendRequest("ignored", _id)}
+            >
+              Ignore
+            </button>
+            <button
+              className="btn btn-secondary"
+              onClick={() => handleSendRequest("interested", _id)}
+            >
+              Interested
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

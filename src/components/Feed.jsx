@@ -31,7 +31,7 @@ console.log(err);    }
   return (
     feed && (
       <div className="flex justify-center my-10">
-        <UserCard user={feed[0]} />
+        <UserCard user={feed[0]} editProfile={false} />
       </div>
     )
   );
